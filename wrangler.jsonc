@@ -1,6 +1,8 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "agentic-inbox",
+	"keep_vars": true,
+	"routes": [{ "pattern": "inbox.newyougo.com", "custom_domain": true }],
 	"compatibility_date": "2025-11-28",
 	"main": "./workers/app.ts",
 	"observability": {
@@ -9,13 +11,10 @@
 	"compatibility_flags": [
 		"nodejs_compat"
 	],
-	"vars": {
-		// Production deploys must also define POLICY_AUD and TEAM_DOMAIN.
-		// TEAM_DOMAIN may be the base Access URL or the full /cdn-cgi/access/certs URL.
-		// The worker now fails closed outside local development if Access is not configured.
-		"DOMAINS": "newyougo.com",
-		"EMAIL_ADDRESSES": []
-	},
+	// Production variables and Access secrets are maintained in Cloudflare.
+	// Keep them on deployment instead of replacing the multi-domain setup.
+	"vars": {},
+
 	"send_email": [
 		{
 			"name": "EMAIL",
